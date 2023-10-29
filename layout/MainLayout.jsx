@@ -13,11 +13,9 @@ import themeConfigs from "@/configs/theme.configs";
 
 const MainLayout = ({ children }) => {
   const { themeMode } = useSelector((state) => state.themeMode);
-  const dispatch = useDispatch();
 
-
-  const { user } = useSelector((state) => state.user);
-
+  // const dispatch = useDispatch();
+  // const { user } = useSelector((state) => state.user);
   // useEffect(() => {
   //   const authUser = async () => {
   //     const { response, err } = await userApi.getInfo();
@@ -25,10 +23,8 @@ const MainLayout = ({ children }) => {
   //     if (response) dispatch(setUser(response));
   //     if (err) dispatch(setUser(null));
   //   };
-
   //   authUser();
   // }, [dispatch]);
-
   // useEffect(() => {
   //   const getFavorites = async () => {
   //     const { response, err } = await favoriteApi.getList();
