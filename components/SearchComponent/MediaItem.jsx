@@ -36,7 +36,8 @@ const MediaItem = ({ media, mediaType }) => {
     // <Link href={mediaType !== "people" ? routesGen.mediaDetail(mediaType, media.mediaId || media.id) : routesGen.person(media.id)}>
     <Link href={`/${mediaType}/${media.id}`}>
       <Box sx={{
-        ...uiConfigs.style.backgroundImage(posterPath),
+        ...uiConfigs.style.backgroundImage(media.image),
+        // ...uiConfigs.style.backgroundImage(posterPath),
         paddingTop: "160%",
         "&:hover .media-info": { opacity: 1, bottom: 0 },
         "&:hover .media-back-drop, &:hover .media-play-btn": { opacity: 1 },
@@ -103,8 +104,8 @@ const MediaItem = ({ media, mediaType }) => {
                   variant="body1"
                   fontWeight="700"
                   sx={{
-                    fontSize: "1rem",
-                    ...uiConfigs.style.typoLines(1, "left")
+                    // fontSize: "1rem",
+                    // ...uiConfigs.style.typoLines(1, "left")
                   }}
                 >
                   {title}

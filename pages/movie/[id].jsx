@@ -1,10 +1,11 @@
 import MovieDetails from '@/components/MovieDetails/MovieDetails'
 import PageWrapper from '@/components/layoutComponents/PageWrapper'
 import MainLayout from '@/layout/MainLayout'
+import axios from 'axios'
 import React from 'react'
 
 export default function getMovieById({ id }) {
-    console.log(id)
+    // console.log(id)
     return (
         <>
             <MainLayout>
@@ -20,6 +21,14 @@ export default function getMovieById({ id }) {
 
 export async function getServerSideProps(context) {
     const { id } = context.params
+    // console.log("hello there")
+    try {
+        const { data } = await axios.get(`https://api.consumet.org/anime/zoro/info?id=${id}`)
+        console.log(data)
+    } catch (error) {
+        console.log("something error has found")
+        // console.log(error)
+    }
 
     return {
         props: {

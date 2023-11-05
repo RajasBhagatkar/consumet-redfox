@@ -3,7 +3,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, Chip, Divider, Stack, Typography } from "@mui/material";
+import { Box, Button, Chip, Divider, Grid, Paper, Stack, Typography, } from "@mui/material";
 import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -31,8 +31,8 @@ import MediaSlide from './MediaSlide';
 import axios from 'axios';
 import { data } from 'autoprefixer';
 import MediaReview from './MediaReview';
-
-
+import { styled } from "@mui/system";
+import DnsIcon from '@mui/icons-material/Dns';
 // MediaReview
 
 
@@ -58,18 +58,28 @@ export default function MovieDetails({ mediaType, mediaId }) {
 
     const videoRef = useRef(null);
 
+
+    const [selectedServer, setSelectedServer] = useState("VidCloud");
+
+    const handleServerChange = (value) => {
+        setSelectedServer(value);
+    }
+
+
     useEffect(() => {
         window.scrollTo(0, 0);
         const getMedia = async () => {
             dispatch(setGlobalLoading(true));
             try {
 
-                const { data } = await axios.get(`https://moonflix-api.vercel.app/api/v1/${mediaType}/detail/${mediaId}`)
+                // const { data } = await axios.get(`https://moonflix-api.vercel.app/api/v1/${mediaType}/detail/${mediaId}`)
+                const { data } = await axios.get(`https://api.consumet.org/anime/zoro/info?id=${mediaId}`)
+
                 if (data) {
                     console.log(data.recommend)
                     setMedia(data);
-                    setIsFavorite(data.isFavorite);
-                    setGenres(data.genres.splice(0, 2));
+                    // setIsFavorite(data.isFavorite);
+                    // setGenres(data.genres.splice(0, 2));
                 }
             } catch (err) {
 
@@ -136,11 +146,11 @@ export default function MovieDetails({ mediaType, mediaId }) {
     };
 
 
-
     return (
         media ? (
             <>
-                <ImageHeader imgPath={tmdbConfigs.backdropPath(media.backdrop_path || media.poster_path)} />
+                {/* <ImageHeader imgPath={tmdbConfigs.backdropPath(media.backdrop_path || media.poster_path)} /> */}
+                <ImageHeader imgPath={media.image} />
                 <Box sx={{
                     color: "primary.contrastText",
                     ...uiConfigs.style.mainContent
@@ -160,7 +170,7 @@ export default function MovieDetails({ mediaType, mediaId }) {
                             }}>
                                 <Box sx={{
                                     paddingTop: "140%",
-                                    ...uiConfigs.style.backgroundImage(tmdbConfigs.posterPath(media.poster_path || media.backdrop_path))
+                                    ...uiConfigs.style.backgroundImage(media.image)
                                 }} />
                             </Box>
                             {/* poster */}
@@ -176,29 +186,43 @@ export default function MovieDetails({ mediaType, mediaId }) {
                                         variant="h4"
                                         fontSize={{ xs: "2rem", md: "2rem", lg: "4rem" }}
                                         fontWeight="700"
-                                        sx={{ ...uiConfigs.style.typoLines(2, "left") }}
+                                    // sx={{ ...uiConfigs.style.typoLines(2, "left") }}
                                     >
-                                        {`${media.title || media.name} ${mediaType === tmdbConfigs.mediaType.movie ? media.release_date.split("-")[0] : media.first_air_date.split("-")[0]}`}
+                                        {/* {`${media.title || media.name} ${media.type == tmdbConfigs.mediaType.movie ? media.release_date?.split("-")[0] : media.first_air_date?.split("-")[0]}`} */}
+                                        {media.title || media.name}
                                     </Typography>
                                     {/* title */}
 
                                     {/* rate and genres */}
                                     <Stack direction="row" spacing={1} alignItems="center">
                                         {/* rate */}
-                                        <CircularRate value={media.vote_average} />
+                                        {/* <CircularRate value={media.vote_average} /> */}
                                         {/* rate */}
                                         <Divider orientation="vertical" />
                                         {/* genres */}
-                                        {genres.map((genre, index) => (
+                                        {
                                             <Chip
-                                                label={genre.name}
+                                                label={media.type}
                                                 variant="filled"
                                                 color="primary"
-                                                key={index}
+                                            // key={index}
                                             />
-                                        ))}
+                                        }
                                         {/* genres */}
                                     </Stack>
+
+
+                                    <Stack direction="row" spacing={1} alignItems="center">
+
+                                        <Chip
+                                            label={`Total Episodes ${media.totalEpisodes}`}
+                                            variant="filled"
+                                            color="primary"
+                                        // key={index}
+                                        />
+
+                                    </Stack>
+
                                     {/* rate and genres */}
 
                                     {/* overview */}
@@ -206,7 +230,7 @@ export default function MovieDetails({ mediaType, mediaId }) {
                                         variant="body1"
                                         sx={{ ...uiConfigs.style.typoLines(5) }}
                                     >
-                                        {media.overview}
+                                        {media.description}
                                     </Typography>
                                     {/* overview */}
 
@@ -237,9 +261,9 @@ export default function MovieDetails({ mediaType, mediaId }) {
                                     {/* buttons */}
 
                                     {/* cast */}
-                                    <Container header="Cast">
+                                    {/* <Container header="Cast">
                                         <CastSlide casts={media.credits.cast} />
-                                    </Container>
+                                    </Container> */}
                                     {/* cast */}
                                 </Stack>
                             </Box>
@@ -250,47 +274,94 @@ export default function MovieDetails({ mediaType, mediaId }) {
 
                     {/* media videos */}
                     <div ref={videoRef} style={{ paddingTop: "2rem" }}>
-                        <Container header="Videos">
+                        {/* <Container header="Videos">
                             <MediaVideosSlide videos={[...media.videos.results].splice(0, 5)} />
-                        </Container>
+                        </Container> */}
                     </div>
                     {/* media videos */}
 
+                    {/* choose server */}
+                    <div>
+
+                        <Typography container textAlign="center" fontWeight='lighter' color={'#555556'} spacing={2} marginBottom={2}>If current server doesn't work please try other servers below.</Typography>
+                        <Grid container justifyContent="center" spacing={1}>
+                            {["VidCloud", "Streamsb", "VidStreaming", "StreamTape"].map((value) => (
+                                <Grid key={value} item>
+                                    <Typography
+                                        variant="body1"
+
+                                        // fontSize={{ xs: "2rem", md: "2rem", lg: "4rem" }}
+                                        sx={{
+                                            // height: 140,
+                                            color: "text.primary",
+                                            width: 150,
+                                            padding: 1,
+                                            // justifyContent: 'center',
+                                            // alignItems: 'center',
+
+                                            display: 'flex',
+                                            backgroundColor: selectedServer === value ? '#f44336' : '',
+                                            // background: 'red',
+                                            flexDirection: 'column',
+                                            border: '1px solid red',
+                                            borderRadius: '12px'
+                                        }}
+                                        onClick={() => handleServerChange(value)}
+                                    >
+                                        <Typography>
+                                            <DnsIcon fontSize='small' />Server
+                                        </Typography>
+
+                                        <Typography fontWeight="700" fontSize={{ xs: '16px', md: '16px', lg: "18px" }} >{value}</Typography>
+                                    </Typography>
+                                </Grid>
+                            ))}
+                        </Grid>
+                    </div>
+
+
+
+
+                    {/* choose server */}
+
+
                     {/* media backdrop */}
-                    {media.images.backdrops.length > 0 && (
+
+                    {/* {media.images.backdrops.length > 0 && (
                         <Container header="backdrops">
                             <BackdropSlide backdrops={media.images.backdrops} />
                         </Container>
-                    )}
+                    )} */}
                     {/* media backdrop */}
 
                     {/* media posters */}
-                    {media.images.posters.length > 0 && (
+                    {/* {media.images.posters.length > 0 && (
                         <Container header="posters">
                             <PosterSlide posters={media.images.posters} />
                         </Container>
-                    )}
+                    )} */}
                     {/* media posters */}
 
                     {/* media reviews */}
-                    <MediaReview reviews={media.reviews} media={media} mediaType={mediaType} />
+                    {/* <MediaReview reviews={media.reviews} media={media} mediaType={mediaType} /> */}
                     {/* media reviews */}
 
                     {/* media recommendation */}
-                    <Container header="you may also like">
-                        {/* {media.recommend.length > 0 && (
+                    {/* <Container header="you may also like">
+                        {media.recommend.length > 0 && (
                             <RecommendSlide medias={media.recommend} mediaType={mediaType} />
-                        )} */}
+                        )}
                         {media.recommend.length === 0 && (
                             <MediaSlide
                                 mediaType={mediaType}
                                 mediaCategory={tmdbConfigs.mediaCategory.top_rated}
                             />
                         )}
-                    </Container>
+                    </Container> */}
                     {/* media recommendation */}
                 </Box>
             </>
         ) : null
     )
 }
+

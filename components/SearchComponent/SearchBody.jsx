@@ -61,7 +61,9 @@ export default function SearchBody() {
             try {
                 setOnSearch(true);
 
-                const { data } = await axios.get(`https://moonflix-api.vercel.app/api/v1/movie/search?query=${query}&page=1`);
+                // const { data } = await axios.get(`https://moonflix-api.vercel.app/api/v1/movie/search?query=${query}&page=1`);
+                const { data } = await axios.get(`https://api.consumet.org/anime/zoro/${query}?page=1`);
+                console.log(data.results)
 
                 setOnSearch(false);
 
@@ -105,6 +107,7 @@ export default function SearchBody() {
                         justifyContent="center"
                         sx={{ width: "100%" }}
                     >
+                        {/* this is mediaTypes like movie, tv, series */}
                         {mediaTypes.map((item, index) => (
                             <Button
                                 size="large"
@@ -119,6 +122,7 @@ export default function SearchBody() {
                             </Button>
                         ))}
                     </Stack>
+                    {/* searchbox input  */}
                     <TextField
                         color="success"
                         placeholder="Search MoonFlix"
@@ -126,7 +130,7 @@ export default function SearchBody() {
                         autoFocus
                         onChange={onQueryChange}
                     />
-
+                    {/* this is showing all the movies if present */}
                     <MediaGrid medias={medias} mediaType={mediaType} />
 
                     {medias.length > 0 && (
