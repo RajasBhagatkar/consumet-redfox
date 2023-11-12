@@ -22,8 +22,9 @@ export default function getMovieById({ id }) {
 export async function getServerSideProps(context) {
     const { id } = context.params
     // console.log("hello there")
+    console.log({ id })
     try {
-        const { data } = await axios.get(`https://api.consumet.org/anime/zoro/info?id=${id}`)
+        const { data } = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/info/${id}`)
         console.log(data)
     } catch (error) {
         console.log("something error has found")

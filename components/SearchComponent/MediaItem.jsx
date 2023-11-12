@@ -22,12 +22,7 @@ const MediaItem = ({ media, mediaType }) => {
     setTitle(media.title || media.name || media.mediaTitle);
 
     setPosterPath(tmdbConfigs.posterPath(media.poster_path || media.backdrop_path || media.mediaPoster || media.profile_path));
-
-    if (mediaType === tmdbConfigs.mediaType.movie) {
-      setReleaseDate(media.release_date && media.release_date.split("-")[0]);
-    } else {
-      setReleaseDate(media.first_air_date && media.first_air_date.split("-")[0]);
-    }
+    setReleaseDate(media.releaseDate.split(" ")[1])
 
     setRate(media.vote_average || media.mediaRate);
   }, [media, mediaType]);
@@ -39,8 +34,18 @@ const MediaItem = ({ media, mediaType }) => {
         ...uiConfigs.style.backgroundImage(media.image),
         // ...uiConfigs.style.backgroundImage(posterPath),
         paddingTop: "160%",
-        "&:hover .media-info": { opacity: 1, bottom: 0 },
-        "&:hover .media-back-drop, &:hover .media-play-btn": { opacity: 1 },
+        // "&:hover .media-info": { opacity: 1, bottom: 0 },
+        // "&:hover .media-back-drop, &:hover .media-play-btn": { opacity: 1 },
+
+        // modified 
+        " .media-info": { opacity: 1, bottom: 0 },
+        ".media-back-drop": { opacity: 1 },
+        " &:hover .media-play-btn": { opacity: 1 },
+        "&:hover .media-info": {
+          transform: 'scale(1.05)',
+        },
+        // till here
+
         color: "primary.contrastText"
       }}>
         {/* movie or tv item */}

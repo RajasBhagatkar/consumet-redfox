@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import MediaItem from '../SearchComponent/MediaItem';
 import axios from 'axios';
 
+//# HOME SLIDER 
 const MediaSlide = ({ mediaType, mediaCategory }) => {
   const [
     medias,

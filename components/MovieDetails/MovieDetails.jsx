@@ -3,7 +3,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, Chip, Divider, Grid, Paper, Stack, Typography, } from "@mui/material";
+import { Box, Button, Chip, Divider, Grid, List, ListItem, Paper, Stack, Typography, useMediaQuery, } from "@mui/material";
 import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -33,6 +33,7 @@ import { data } from 'autoprefixer';
 import MediaReview from './MediaReview';
 import { styled } from "@mui/system";
 import DnsIcon from '@mui/icons-material/Dns';
+import { useTheme } from '@emotion/react';
 // MediaReview
 
 
@@ -58,8 +59,11 @@ export default function MovieDetails({ mediaType, mediaId }) {
 
     const videoRef = useRef(null);
 
+    const theme = useTheme()
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     const [selectedServer, setSelectedServer] = useState("VidCloud");
+    const [selectedEpisode, setSelectedEpisode] = useState(0);
 
     const handleServerChange = (value) => {
         setSelectedServer(value);
@@ -72,8 +76,7 @@ export default function MovieDetails({ mediaType, mediaId }) {
             dispatch(setGlobalLoading(true));
             try {
 
-                // const { data } = await axios.get(`https://moonflix-api.vercel.app/api/v1/${mediaType}/detail/${mediaId}`)
-                const { data } = await axios.get(`https://api.consumet.org/anime/zoro/info?id=${mediaId}`)
+                const { data } = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/info/${mediaId}`)
 
                 if (data) {
                     console.log(data.recommend)
@@ -201,12 +204,14 @@ export default function MovieDetails({ mediaType, mediaId }) {
                                         <Divider orientation="vertical" />
                                         {/* genres */}
                                         {
-                                            <Chip
-                                                label={media.type}
-                                                variant="filled"
-                                                color="primary"
-                                            // key={index}
-                                            />
+                                            media.genres.slice(0, 4).map(genera => (
+                                                <Chip
+                                                    label={genera}
+                                                    variant="filled"
+                                                    color="primary"
+                                                // key={index}
+                                                />
+                                            ))
                                         }
                                         {/* genres */}
                                     </Stack>
@@ -286,7 +291,11 @@ export default function MovieDetails({ mediaType, mediaId }) {
                         <Typography container textAlign="center" fontWeight='lighter' color={'#555556'} spacing={2} marginBottom={2}>If current server doesn't work please try other servers below.</Typography>
                         <Grid container justifyContent="center" spacing={1}>
                             {["VidCloud", "Streamsb", "VidStreaming", "StreamTape"].map((value) => (
-                                <Grid key={value} item>
+                                <Grid key={value}
+                                    sx={{
+                                        "cursor": "pointer"
+                                    }}
+                                    item>
                                     <Typography
                                         variant="body1"
 
@@ -319,10 +328,65 @@ export default function MovieDetails({ mediaType, mediaId }) {
                         </Grid>
                     </div>
 
-
-
-
                     {/* choose server */}
+
+                    {/* choose episodes */}
+                    <Typography variant="h6" sx={{ color: "text.primary", marginTop: '2rem' }}>
+                        Episodes:
+                    </Typography>
+                    {
+                        isMobile ? (
+                            <List container sx={{ overflow: 'auto', maxHeight: 250, marginTop: '1rem' }} spacing={3}>
+                                {media.episodes.map((episodes) => (
+                                    <ListItem key={episodes.number} sx={{
+                                        "outline": '1px solid #282828',
+                                        "margin": '5px',
+                                        width: 'auto',
+                                        "padding": '10px',
+                                        "borderRadius": '10px',
+                                        "&:hover": {
+                                            "outline": '1px solid red',
+                                        },
+                                        "backgroundColor": selectedEpisode === episodes.number ? '#f44336' : '',
+
+                                    }}
+                                        onClick={() => setSelectedEpisode(episodes.number)}>
+                                        <Typography variant="body1" sx={{ color: "text.primary", }}>
+                                            Episode {episodes.number}
+                                        </Typography>
+                                    </ListItem>
+                                ))}
+                            </List>
+                        ) : (
+
+                            <Grid container style={{ justifyContent: 'center' }}>
+                                {
+                                    media.episodes.map(episodes => (
+                                        <Grid item xs={3} key={episodes.number}>
+                                            <Box sx={{
+                                                "outline": '1px solid #282828',
+                                                "margin": '5px',
+                                                "padding": '10px',
+                                                "borderRadius": '10px',
+                                                "&:hover": {
+                                                    "outline": '1px solid red',
+                                                },
+                                                "backgroundColor": selectedEpisode === episodes.number ? '#f44336' : '',
+                                            }}
+                                                onClick={() => setSelectedEpisode(episodes.number)}>
+                                                <Typography variant="body1" sx={{ color: "text.primary", }}>
+                                                    Episode {episodes.number}
+                                                </Typography>
+                                            </Box>
+                                        </Grid>
+                                    ))
+                                }
+
+                            </Grid>
+
+                        )
+                    }
+
 
 
                     {/* media backdrop */}
@@ -359,7 +423,7 @@ export default function MovieDetails({ mediaType, mediaId }) {
                         )}
                     </Container> */}
                     {/* media recommendation */}
-                </Box>
+                </Box >
             </>
         ) : null
     )

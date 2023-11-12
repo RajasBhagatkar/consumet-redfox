@@ -24,57 +24,24 @@ export default function SearchBody() {
     const [page, setPage] = useState(1);
 
     const onCategoryChange = (selectedCategory) => setMediaType(selectedCategory);
-    // https://moonflix-api.vercel.app/api/v1/search?query=${query}&page=${page}
 
-    // const search = useCallback(
-    //     async () => {
-    //         try {
+    const search = useCallback(async () => {
+        try {
+            setOnSearch(true);
 
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/${query}?page=1`);
+            console.log(data.results)
 
-    //             setOnSearch(true);
+            setOnSearch(false);
 
-    //             // const { data } = await axios.get(`https://moonflix-api.vercel.app/api/v1/movie/search?query=${query}&page=1`);
-    //             const { data } = await getMovies(query, 1)
-
-    //             console.log(data)
-    //             // const { data, isLoading } = getMovies(query, page)
-    //             // console.log(isLoading)
-
-
-    //             setOnSearch(false);
-
-    //             if (data) {
-    //                 if (page > 1) setMedias(m => [...m, ...data.results]);
-    //                 else setMedias([...data.results]);
-    //             }
-    //         } catch (err) {
-
-    //             if (err) toast.error(err.message);
-    //         }
-
-
-    //     },
-    //     [mediaType, query, page],
-    // );
-    const search = useCallback(
-        async () => {
-            try {
-                setOnSearch(true);
-
-                // const { data } = await axios.get(`https://moonflix-api.vercel.app/api/v1/movie/search?query=${query}&page=1`);
-                const { data } = await axios.get(`https://api.consumet.org/anime/zoro/${query}?page=1`);
-                console.log(data.results)
-
-                setOnSearch(false);
-
-                if (data) {
-                    if (page > 1) setMedias(m => [...m, ...data.results]);
-                    else setMedias([...data.results]);
-                }
-            } catch (err) {
-                if (err) toast.error(err.message);
+            if (data) {
+                if (page > 1) setMedias(m => [...m, ...data.results]);
+                else setMedias([...data.results]);
             }
-        },
+        } catch (err) {
+            if (err) toast.error(err.message);
+        }
+    },
         [mediaType, query, page],
     );
 
