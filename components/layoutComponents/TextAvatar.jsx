@@ -26,8 +26,9 @@ const TextAvatar = ({ text }) => {
         width: 40,
         height: 40
       }}
-      children={`${text.split(" ")[0][0]}`}
-    />
+    >
+      {text.split(" ")[0][0]}
+    </Avatar>
   );
 };
 

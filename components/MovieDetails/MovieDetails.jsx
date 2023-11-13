@@ -34,6 +34,7 @@ import MediaReview from './MediaReview';
 import { styled } from "@mui/system";
 import DnsIcon from '@mui/icons-material/Dns';
 import { useTheme } from '@emotion/react';
+import VideoPlayer from '../Player/VideoPlayer';
 // MediaReview
 
 
@@ -159,122 +160,144 @@ export default function MovieDetails({ mediaType, mediaId }) {
                     ...uiConfigs.style.mainContent
                 }}>
                     {/* media content */}
-                    <Box sx={{
-                        marginTop: { xs: "-10rem", md: "-15rem", lg: "-20rem" }
-                    }}>
-                        <Box sx={{
-                            display: "flex",
-                            flexDirection: { md: "row", xs: "column" }
-                        }}>
-                            {/* poster */}
+                    {selectedEpisode ?
+                        (
+
                             <Box sx={{
-                                width: { xs: "70%", sm: "50%", md: "40%" },
-                                margin: { xs: "0 auto 2rem", md: "0 2rem 0 0" }
+                                marginTop: { xs: "-10rem", md: "-15rem", lg: "-20rem" }
                             }}>
+
                                 <Box sx={{
-                                    paddingTop: "140%",
-                                    ...uiConfigs.style.backgroundImage(media.image)
-                                }} />
+                                    display: "flex",
+                                    flexDirection: { md: "row", xs: "column" }
+                                }}>
+                                    {/* <h1 style={{ width: "100%", border: '1px solid red' }}>Video Player</h1> */}
+                                    <VideoPlayer episodeID={media.episodes[selectedEpisode - 1]} />
+                                </Box>
                             </Box>
-                            {/* poster */}
+                        ) :
 
-                            {/* media info */}
+
+                        <Box sx={{
+                            marginTop: { xs: "-10rem", md: "-15rem", lg: "-20rem" }
+                        }}>
                             <Box sx={{
-                                width: { xs: "100%", md: "60%" },
-                                color: "text.primary"
+                                display: "flex",
+                                flexDirection: { md: "row", xs: "column" }
                             }}>
-                                <Stack spacing={5}>
-                                    {/* title */}
-                                    <Typography
-                                        variant="h4"
-                                        fontSize={{ xs: "2rem", md: "2rem", lg: "4rem" }}
-                                        fontWeight="700"
-                                    // sx={{ ...uiConfigs.style.typoLines(2, "left") }}
-                                    >
-                                        {/* {`${media.title || media.name} ${media.type == tmdbConfigs.mediaType.movie ? media.release_date?.split("-")[0] : media.first_air_date?.split("-")[0]}`} */}
-                                        {media.title || media.name}
-                                    </Typography>
-                                    {/* title */}
+                                {/* poster */}
+                                <Box sx={{
+                                    width: { xs: "70%", sm: "50%", md: "40%" },
+                                    margin: { xs: "0 auto 2rem", md: "0 2rem 0 0" }
+                                }}>
+                                    <Box sx={{
+                                        paddingTop: "140%",
+                                        ...uiConfigs.style.backgroundImage(media.image)
+                                    }} />
+                                </Box>
+                                {/* poster */}
 
-                                    {/* rate and genres */}
-                                    <Stack direction="row" spacing={1} alignItems="center">
-                                        {/* rate */}
-                                        {/* <CircularRate value={media.vote_average} /> */}
-                                        {/* rate */}
-                                        <Divider orientation="vertical" />
-                                        {/* genres */}
-                                        {
-                                            media.genres.slice(0, 4).map(genera => (
-                                                <Chip
-                                                    label={genera}
-                                                    variant="filled"
-                                                    color="primary"
-                                                // key={index}
-                                                />
-                                            ))
-                                        }
-                                        {/* genres */}
-                                    </Stack>
-
-
-                                    <Stack direction="row" spacing={1} alignItems="center">
-
-                                        <Chip
-                                            label={`Total Episodes ${media.totalEpisodes}`}
-                                            variant="filled"
-                                            color="primary"
-                                        // key={index}
-                                        />
-
-                                    </Stack>
-
-                                    {/* rate and genres */}
-
-                                    {/* overview */}
-                                    <Typography
-                                        variant="body1"
-                                        sx={{ ...uiConfigs.style.typoLines(5) }}
-                                    >
-                                        {media.description}
-                                    </Typography>
-                                    {/* overview */}
-
-                                    {/* buttons */}
-                                    <Stack direction="row" spacing={1}>
-                                        <LoadingButton
-                                            variant="text"
-                                            sx={{
-                                                width: "max-content",
-                                                "& .MuiButon-starIcon": { marginRight: "0" }
-                                            }}
-                                            size="large"
-                                            startIcon={isFavorite ? <FavoriteIcon /> : <FavoriteBorderOutlinedIcon />}
-                                            loadingPosition="start"
-                                            loading={onRequest}
-                                            onClick={onFavoriteClick}
-                                        />
-                                        <Button
-                                            variant="contained"
-                                            sx={{ width: "max-content" }}
-                                            size="large"
-                                            startIcon={<PlayArrowIcon />}
-                                            onClick={() => videoRef.current.scrollIntoView()}
+                                {/* media info */}
+                                <Box sx={{
+                                    width: { xs: "100%", md: "60%" },
+                                    color: "text.primary"
+                                }}>
+                                    <Stack spacing={5}>
+                                        {/* title */}
+                                        <Typography
+                                            variant="h4"
+                                            fontSize={{ xs: "2rem", md: "2rem", lg: "4rem" }}
+                                            fontWeight="700"
+                                        // sx={{ ...uiConfigs.style.typoLines(2, "left") }}
                                         >
-                                            watch now
-                                        </Button>
-                                    </Stack>
-                                    {/* buttons */}
+                                            {/* {`${media.title || media.name} ${media.type == tmdbConfigs.mediaType.movie ? media.release_date?.split("-")[0] : media.first_air_date?.split("-")[0]}`} */}
+                                            {media.title || media.name}
+                                        </Typography>
+                                        {/* title */}
 
-                                    {/* cast */}
-                                    {/* <Container header="Cast">
+                                        {/* rate and genres */}
+                                        <Stack direction="row" spacing={1} alignItems="center">
+                                            {/* rate */}
+                                            {/* <CircularRate value={media.vote_average} /> */}
+                                            {/* rate */}
+                                            <Divider orientation="vertical" />
+                                            {/* genres */}
+                                            {
+                                                media.genres.slice(0, 4).map(genera => (
+                                                    <Chip
+                                                        key={genera}
+                                                        label={genera}
+                                                        variant="filled"
+                                                        color="primary"
+                                                    // key={index}
+                                                    />
+                                                ))
+                                            }
+                                            {/* genres */}
+                                        </Stack>
+
+
+                                        <Stack direction="row" spacing={1} alignItems="center">
+
+                                            <Chip
+                                                label={`Total Episodes ${media.totalEpisodes}`}
+                                                variant="filled"
+                                                color="primary"
+                                            // key={index}
+                                            />
+
+                                        </Stack>
+
+                                        {/* rate and genres */}
+
+                                        {/* overview */}
+                                        <Typography
+                                            variant="body1"
+                                            sx={{ ...uiConfigs.style.typoLines(5) }}
+                                        >
+                                            {media.description}
+                                        </Typography>
+                                        {/* overview */}
+
+                                        {/* buttons */}
+                                        <Stack direction="row" spacing={1}>
+                                            <LoadingButton
+                                                variant="text"
+                                                sx={{
+                                                    width: "max-content",
+                                                    "& .MuiButon-starIcon": { marginRight: "0" }
+                                                }}
+                                                size="large"
+                                                startIcon={isFavorite ? <FavoriteIcon /> : <FavoriteBorderOutlinedIcon />}
+                                                loadingPosition="start"
+                                                loading={onRequest}
+                                                onClick={onFavoriteClick}
+                                            />
+                                            <Button
+                                                variant="contained"
+                                                sx={{ width: "max-content" }}
+                                                size="large"
+                                                startIcon={<PlayArrowIcon />}
+                                                onClick={() => videoRef.current.scrollIntoView()}
+                                            >
+                                                watch now
+                                            </Button>
+                                        </Stack>
+                                        {/* buttons */}
+
+                                        {/* cast */}
+                                        {/* <Container header="Cast">
                                         <CastSlide casts={media.credits.cast} />
                                     </Container> */}
-                                    {/* cast */}
-                                </Stack>
+                                        {/* cast */}
+                                    </Stack>
+                                </Box>
+                                {/* media info */}
                             </Box>
-                            {/* media info */}
                         </Box>
-                    </Box>
+
+                    }
+
                     {/* media content */}
 
                     {/* media videos */}
@@ -288,7 +311,7 @@ export default function MovieDetails({ mediaType, mediaId }) {
                     {/* choose server */}
                     <div>
 
-                        <Typography container textAlign="center" fontWeight='lighter' color={'#555556'} spacing={2} marginBottom={2}>If current server doesn't work please try other servers below.</Typography>
+                        <Typography container textAlign="center" fontWeight='lighter' color={'#555556'} spacing={2} marginBottom={2}>If current server doesn&apos;t work please try other servers below.</Typography>
                         <Grid container justifyContent="center" spacing={1}>
                             {["VidCloud", "Streamsb", "VidStreaming", "StreamTape"].map((value) => (
                                 <Grid key={value}
