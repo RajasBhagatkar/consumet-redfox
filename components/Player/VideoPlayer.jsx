@@ -5,11 +5,13 @@ import Control from './Control'
 import { formatTime } from '@/utils/format'
 import getStremingURL from '@/hooks/getStremingURL'
 import { findDOMNode } from 'react-dom'
+import useMobileSize from '@/hooks/useMobileSize'
 
 let count = 0;
 
 const VideoPlayer = ({ episodeID }) => {
 
+    const mobile = useMobileSize()
 
     // const { data } = getStremingURL("one-punch-man-63$episode$1501$both")
     const player = useRef(null);
@@ -171,7 +173,7 @@ const VideoPlayer = ({ episodeID }) => {
             </div> */}
             {/* maxWidth="md" */}
             <Container justify="center">
-                <div className="player__wrapper" onMouseMove={mouseMoveHandler} style={{ minHeight: "600px" }} ref={player}>
+                <div className="player__wrapper" onMouseMove={mouseMoveHandler} style={{ minHeight: mobile ? "" : "600px", marginBottom: mobile && "10rem" }} ref={player}>
                     <ReactPlayer
                         ref={videoPlayerRef}
                         className="player"

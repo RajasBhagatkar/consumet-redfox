@@ -1,11 +1,12 @@
-import { FastForward, FastRewind, Pause, PlayArrow, SkipNext, VolumeDown, VolumeOff, VolumeUp } from '@mui/icons-material'
+import useMobileSize from '@/hooks/useMobileSize';
+import { FastForward, FastRewind, Fullscreen, Pause, PlayArrow, SkipNext, VolumeDown, VolumeOff, VolumeUp } from '@mui/icons-material'
 import { Box, Button, CircularProgress, Grid, Popover, Slider, Tooltip } from '@mui/material'
 import React from 'react'
 
 
 const Control = ({ buffer, onPlayPause, playing, onRewind, onForward, played, onSeek, onSeekMouseUp, onVolumeChangeHandler, onVolumeSeekUp, volume, mute, onMute, duration, currentTime, onMouseSeekDown, controlRef, episodeInfo }) => {
 
-
+    const mobile = useMobileSize();
     return (
         <div className="control_Container" ref={controlRef}>
             <div className="top_container">
@@ -51,6 +52,7 @@ const Control = ({ buffer, onPlayPause, playing, onRewind, onForward, played, on
                         onMouseDown={onMouseSeekDown}
                     /> */}
                     <Slider
+                        aria-label="time-indicator"
                         sx={{
                             root: {
                                 height: "20px",
@@ -82,7 +84,26 @@ const Control = ({ buffer, onPlayPause, playing, onRewind, onForward, played, on
                                 height: 5,
                                 borderRadius: 4,
                             },
-                        }}
+                            // from mi/ui website
+                            height: 4,
+                            '& .MuiSlider-thumb': {
+                                width: 8,
+                                height: 8,
+                                transition: '0.3s cubic-bezier(.47,1.64,.41,.8)',
+                                '&:before': {
+                                    boxShadow: '0 2px 12px 0 rgba(0,0,0,0.4)',
+                                },
+
+                                '&.Mui-active': {
+                                    width: 20,
+                                    height: 20,
+                                },
+                            },
+                            '& .MuiSlider-rail': {
+                                opacity: 0.28,
+                            },
+                        }
+                        }
                         min={0}
                         max={100}
                         value={played * 100}
@@ -90,6 +111,8 @@ const Control = ({ buffer, onPlayPause, playing, onRewind, onForward, played, on
                         onChangeCommitted={onSeekMouseUp}
                         onMouseDown={onMouseSeekDown}
                     />
+
+
                 </div>
                 <div className="control__box">
                     <div className="inner__controls">
@@ -115,9 +138,10 @@ const Control = ({ buffer, onPlayPause, playing, onRewind, onForward, played, on
 
                         <Slider
                             sx={{
-                                width: "100px",
+                                width: mobile ? "70px" : "100px",
                                 color: 'red'
                             }}
+                            size="small"
                             onChange={onVolumeChangeHandler}
                             value={volume * 100}
                             onChangeCommitted={onVolumeSeekUp}
@@ -125,7 +149,14 @@ const Control = ({ buffer, onPlayPause, playing, onRewind, onForward, played, on
 
                         <span>{currentTime} : {duration}</span>
                     </div>
-
+                    <div className="icon__btn" style={{ cursor: "pointer", paddingRight: "10px" }}>
+                        <Fullscreen sx={{
+                            '&:hover': {
+                                width: 30,
+                                height: 30,
+                            },
+                        }} />
+                    </div>
                 </div>
             </div>
         </div>
