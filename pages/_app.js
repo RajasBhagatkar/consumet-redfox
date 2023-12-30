@@ -43,6 +43,14 @@ function Loading() {
 
 
 export default function App({ Component, pageProps }) {
+  if (pageProps.statusCode === 404  ) {
+    import ("../public/css/404/main.css")
+    import ("../public/css/404/plugins.css")
+    import ("../public/css/404/color-3.css")
+    console.log("404 not found page requested")
+  }
+  console.log(pageProps.statusCode)
+
   return (
     <>
       <Head>
