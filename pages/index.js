@@ -13,7 +13,7 @@ export default function Home() {
         <MainLayout>
           <PageWrapper state={'home'} >
             <HeroSlide mediaType={tmdbConfigs.mediaType.movie} mediaCategory={tmdbConfigs.mediaCategory.popular} />
-            <h1>hello there</h1>
+            {/* <h1>hello there</h1> */}
           </PageWrapper>
         </MainLayout>
       </span>
