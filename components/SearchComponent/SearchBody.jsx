@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 // import mediaApi from "../api/modules/media.api";
 import MediaGrid from './MediaGrid';
 import uiConfigs from '@/configs/ui.configs';
-import axios from 'axios';
+import axios from '@/api/axios';
 import getMovies from '@/hooks/getMovies';
 
 
@@ -29,7 +29,7 @@ export default function SearchBody() {
         try {
             setOnSearch(true);
 
-            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/${query}?page=1`);
+            const { data } = await axios.get(`/${query}?page=1`);
             console.log(data.results)
 
             setOnSearch(false);

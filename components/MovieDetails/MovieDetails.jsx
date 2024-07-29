@@ -28,7 +28,7 @@ import BackdropSlide from './BackdropSlide';
 import PosterSlide from './PosterSlide';
 import RecommendSlide from './RecommendSlide';
 import MediaSlide from './MediaSlide';
-import axios from 'axios';
+import axios from '@/api/axios';
 import { data } from 'autoprefixer';
 import MediaReview from './MediaReview';
 import { styled } from "@mui/system";
@@ -77,10 +77,9 @@ export default function MovieDetails({ mediaType, mediaId }) {
             dispatch(setGlobalLoading(true));
             try {
 
-                const { data } = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/info/${mediaId}`)
+                const { data } = await axios.get(`/info/${mediaId}`)
 
                 if (data) {
-                    console.log(data.recommend)
                     setMedia(data);
                     // setIsFavorite(data.isFavorite);
                     // setGenres(data.genres.splice(0, 2));
@@ -223,7 +222,7 @@ export default function MovieDetails({ mediaType, mediaId }) {
                                             <Divider orientation="vertical" />
                                             {/* genres */}
                                             {
-                                                media.genres.slice(0, 4).map(genera => (
+                                                media.genres.map(genera => (
                                                     <Chip
                                                         key={genera}
                                                         label={genera}
@@ -312,6 +311,7 @@ export default function MovieDetails({ mediaType, mediaId }) {
                     <div>
 
                         <Typography container textAlign="center" fontWeight='lighter' color={'#555556'} spacing={2} marginBottom={2}>If current server doesn&apos;t work please try other servers below.</Typography>
+                        {/* server info */}
                         <Grid container justifyContent="center" spacing={1}>
                             {["VidCloud", "Streamsb", "VidStreaming", "StreamTape"].map((value) => (
                                 <Grid key={value}
