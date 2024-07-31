@@ -2,8 +2,9 @@ import fetcher from '@/api/fetcher'
 import React from 'react'
 import useSwr from 'swr'
 
-export default function getMovies({ query, page = 1 }) {
-    const { data, error, isLoading } = useSwr(`https://moonflix-api.vercel.app/api/v1/movie/search?query=${query}&page=${page}`, fetcher, {
+export default function getMovieInfo(id) {
+
+    const { data, error, isLoading } = useSwr(id ? `https://consumet-api-nqgo.onrender.com/anime/gogoanime/info/${id}` : "", fetcher, {
         revalidateIfStale: false,
         revalidateOnFocus: false,
         revalidateOnReconnect: false

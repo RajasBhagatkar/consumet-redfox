@@ -1,13 +1,13 @@
 import React from 'react'
 import { LoadingButton } from "@mui/lab";
-import { Box, Button, Stack, TextField, Toolbar } from "@mui/material";
+import { Box, Button, FormControl, Stack, TextField, Toolbar } from "@mui/material";
 import { useState, useEffect, useCallback } from "react";
 import { toast } from "react-toastify";
 // import mediaApi from "../api/modules/media.api";
 import MediaGrid from './MediaGrid';
 import uiConfigs from '@/configs/ui.configs';
 import axios from '@/api/axios';
-import getMovies from '@/hooks/getMovies';
+import Link from 'next/link';
 
 
 
@@ -18,21 +18,20 @@ const timeout = 500;
 export default function SearchBody() {
 
     const [query, setQuery] = useState("");
-    const [onSearch, setOnSearch] = useState(false);
+    const [onSearchLoading, setOnSearchLoading] = useState(false);
     const [mediaType, setMediaType] = useState(mediaTypes[0]);
     const [medias, setMedias] = useState([]);
     const [page, setPage] = useState(1);
 
     const onCategoryChange = (selectedCategory) => setMediaType(selectedCategory);
 
-    const search = useCallback(async () => {
+    const search = useCallback(async (pageNumber) => {
         try {
-            setOnSearch(true);
+            setOnSearchLoading(true);
 
             const { data } = await axios.get(`/${query}?page=1`);
-            console.log(data.results)
 
-            setOnSearch(false);
+            setOnSearchLoading(false);
 
             if (data) {
                 if (page > 1) setMedias(m => [...m, ...data.results]);
@@ -46,21 +45,17 @@ export default function SearchBody() {
     );
 
 
-    useEffect(() => {
-        if (query.trim().length === 0) {
-            setMedias([]);
-            setPage(1);
-        } else search();
-    }, [search, query, mediaType, page]);
+    // useEffect(() => {
+    //     if (query.trim().length === 0) {
+    //         setMedias([]);
+    //         setPage(1);
+    //     } else search();
+    // }, [search, query, mediaType, page]);
 
 
     const onQueryChange = (e) => {
         const newQuery = e.target.value;
-        clearTimeout(timer);
-
-        timer = setTimeout(() => {
-            setQuery(newQuery);
-        }, timeout);
+        setQuery(newQuery);
     };
     return (
         <>
@@ -75,7 +70,7 @@ export default function SearchBody() {
                         sx={{ width: "100%" }}
                     >
                         {/* this is mediaTypes like movie, tv, series */}
-                        {mediaTypes.map((item, index) => (
+                        {/* {mediaTypes.map((item, index) => (
                             <Button
                                 size="large"
                                 key={index}
@@ -87,22 +82,50 @@ export default function SearchBody() {
                             >
                                 {item}
                             </Button>
-                        ))}
+                        ))} */}
                     </Stack>
                     {/* searchbox input  */}
-                    <TextField
-                        color="success"
-                        placeholder="Search MoonFlix"
-                        sx={{ width: "100%" }}
-                        autoFocus
-                        onChange={onQueryChange}
-                    />
+                    <form onSubmit={(e) => {
+                        e.preventDefault();
+                        search(1);
+                    }}
+                    >
+
+                        <Box
+                            display={"flex"}
+                            position={"relative"}
+                        >
+                            <TextField
+                                color="success"
+                                placeholder="Search MoonFlix"
+                                sx={{ width: "100%" }}
+                                autoFocus
+                                onChange={onQueryChange}
+                            />
+
+
+                            <Box
+                                position={"absolute"}
+                                alignSelf={"center"}
+                                right={'10px'}
+                            >
+
+                                <Button
+                                    variant="outlined"
+                                    onClick={() => search(1)}
+                                >
+                                    Search
+                                </Button>
+                            </Box>
+                        </Box>
+                    </form>
+
                     {/* this is showing all the movies if present */}
                     <MediaGrid medias={medias} mediaType={mediaType} />
 
                     {medias.length > 0 && (
                         <LoadingButton
-                            loading={onSearch}
+                            loading={onSearchLoading}
                             onClick={() => setPage(page + 1)}
                         >
                             load more

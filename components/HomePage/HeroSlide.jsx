@@ -16,7 +16,7 @@ const HeroSlide = ({ mediaType, mediaCategory }) => {
   const theme = useTheme();
   const dispatch = useDispatch();
 
-  console.log({ mediaType, mediaCategory })
+  // console.log({ mediaType, mediaCategory })
 
   const [movies, setMovies] = useState([
     {
