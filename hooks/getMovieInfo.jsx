@@ -4,7 +4,7 @@ import useSwr from 'swr'
 
 export default function getMovieInfo(id) {
 
-    const { data, error, isLoading } = useSwr(id ? `https://consumet-api-nqgo.onrender.com/anime/gogoanime/info/${id}` : "", fetcher, {
+    const { data, error, isLoading } = useSwr(id ? `${process.env.NEXT_PUBLIC_BASE_URL}/info/${id}` : "", fetcher, {
         revalidateIfStale: false,
         revalidateOnFocus: false,
         revalidateOnReconnect: false
