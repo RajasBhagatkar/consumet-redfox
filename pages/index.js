@@ -1,3 +1,4 @@
+import axios from '@/api/axios';
 import HeroSlide from '@/components/HomePage/HeroSlide';
 import MediaSlide from '@/components/MovieDetails/MediaSlide';
 import Container from '@/components/layoutComponents/Container';
@@ -11,7 +12,7 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 
-export default function Home() {
+export default function Home({ trendingAnime, recentAnimeEpisodes }) {
   return (
     <>
       <span>
@@ -20,10 +21,13 @@ export default function Home() {
             <HeroSlide mediaType={tmdbConfigs.mediaType.movie} mediaCategory={tmdbConfigs.mediaCategory.popular} />
             {/* <h1>hello there</h1> */}
             <Box marginTop="-4rem" sx={{ ...uiConfigs.style.mainContent }} >
-              <Container header="popular anime">
-                {/* <MediaSlide /> */}
+              <Container header="Trending Anime">
+                <MediaSlide data={trendingAnime.results} mediaType={"movie"} />
               </Container>
 
+              <Container header="Recent Anime Episodes">
+                <MediaSlide data={recentAnimeEpisodes.results} mediaType={"movie"} />
+              </Container>
             </Box>
           </PageWrapper>
         </MainLayout>
@@ -32,6 +36,49 @@ export default function Home() {
 
   )
 }
-// export async function getServerSideProps() {
+export async function getServerSideProps() {
+  let top_aring = null;
+  let recent_episodes = null;
+  try {
+    /**
+     * 
+     * {
+        id: String,
+        title: String,
+        image: Link,
+        url: Link,
+        genres: [Array],
+        episodeId: String,
+        episodeNumber: number
+      }[]
+     */
+    const top_aring_response = await axios.get("/top-airing")
+    const recent_episodes_response = await axios.get("/recent-episodes")
+    top_aring = top_aring_response.data;
+    recent_episodes = recent_episodes_response.data
+    /**
+     *     
+     * {
+            id: String,
+            episodeId: String,
+            episodeNumber: Number,
+            title: String,
+            image: Link,
+            url: Link
+          },
+     */
+    // console.log(recent_episodes_response.data)
 
-// }
+  } catch (e) {
+    return {
+      notFound: true
+    }
+  }
+
+  return {
+    props: {
+      trendingAnime: top_aring,
+      recentAnimeEpisodes: recent_episodes
+    }
+  }
+}

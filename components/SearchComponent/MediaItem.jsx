@@ -22,7 +22,7 @@ const MediaItem = ({ media, mediaType }) => {
     setTitle(media.title || media.name || media.mediaTitle);
 
     setPosterPath(tmdbConfigs.posterPath(media.poster_path || media.backdrop_path || media.mediaPoster || media.profile_path));
-    setReleaseDate(media.releaseDate.split(" ")[1])
+    setReleaseDate(media?.releaseDate?.split(" ")[1])
 
     setRate(media.vote_average || media.mediaRate);
   }, [media, mediaType]);
