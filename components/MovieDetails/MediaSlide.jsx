@@ -5,46 +5,30 @@ import AutoSwiper from './AutoSwiper';
 import { toast } from 'react-toastify';
 import MediaItem from '../SearchComponent/MediaItem';
 import axios from 'axios';
+import { Grid } from '@mui/material';
 
 //# HOME SLIDER 
-const MediaSlide = ({ mediaType, mediaCategory }) => {
-  const [
-    medias,
-    setMedias
-  ] = useState([]);
-
-  useEffect(
-    () => {
-      const getMedias = async () => {
-        try {
-          const { data } = await axios.get(
-            `https://moonflix-api.vercel.app/api/v1/${mediaType}/${mediaCategory}?page=${'1'}`
-          );
-          setMedias(data.results);
-        } catch (err) {
-          if (err) toast.error(err.message);
-        }
-      };
-
-      getMedias();
-    },
-    [
-      mediaType,
-      mediaCategory
-    ]
-  );
+const MediaSlide = ({ data, mediaType }) => {
 
   return (
-    <AutoSwiper>
-      {medias.map((media, index) => (
-        <SwiperSlide key={index}>
-          <MediaItem
-            media={media}
-            mediaType={mediaType}
-          />
-        </SwiperSlide>
+    // <AutoSwiper>
+    //   {data.map((media, index) => (
+    //     <SwiperSlide key={index}>
+    //       <MediaItem
+    //         media={media}
+    //         mediaType={mediaType}
+    //       />
+    //     </SwiperSlide>
+    //   ))}
+    // </AutoSwiper>
+
+    <Grid container spacing={1} sx={{ marginRight: "-8px!important" }}>
+      {data.map((media, index) => (
+        <Grid item xs={6} sm={4} md={3} key={index}>
+          <MediaItem media={media} mediaType={mediaType} />
+        </Grid>
       ))}
-    </AutoSwiper>
+    </Grid>
   );
 };
 
