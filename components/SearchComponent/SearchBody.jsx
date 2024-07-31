@@ -161,7 +161,7 @@ function WebsiteInfo() {
                         <b >What is RedFox?</b>
                     </div>
                     <span>
-                        RedFox has joined the movie streaming industry recently. Although we are the new kid on the block, we have spent years doing extensive research about movie fans' expectations for an ideal movie site. Our ultimate goal is to create the best site ever for the community. RedFox does not only provide you with a safe and secure experience, it also offers you premium quality content and features that normally cost you ten bucks a month elsewhere. On RedFox, you can enjoy thousands of movies and TV shows in HD quality with multiple subtitles. Your streaming experience will be smooth and seamless with no lagging, buffering, or pop ups. RedFox also provides 24/7 customer service to make sure your overall experience will be completely hassle-free.
+                        RedFox has joined the movie streaming industry recently. Although we are the new kid on the block, we have spent years doing extensive research about movie fans expectations for an ideal movie site. Our ultimate goal is to create the best site ever for the community. RedFox does not only provide you with a safe and secure experience, it also offers you premium quality content and features that normally cost you ten bucks a month elsewhere. On RedFox, you can enjoy thousands of movies and TV shows in HD quality with multiple subtitles. Your streaming experience will be smooth and seamless with no lagging, buffering, or pop ups. RedFox also provides 24/7 customer service to make sure your overall experience will be completely hassle-free.
                     </span>
                 </Typography>
             </Box>
