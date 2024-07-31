@@ -225,26 +225,26 @@ function WebsiteInfo() {
                         <em>
                             - Extensive content library: With over 30,000 titles including both movies and
                             TV shows, we are confident to provide you with whatever movies you have been
-                            longing for.&nbsp;
+                            longing for.
                             <br />
                             - HD Resolution: Once you go HD, you cannot go back. It is simply the truth.
                             Why suffer from blurry images when you can have high definition quality (720p)
                             at RedFox? In case your Internet connection is not stable, you can adjust the
-                            video quality for a smoother streaming experience.&nbsp;
+                            video quality for a smoother streaming experience.
                             <br />
                             - Seamless streaming experience: Expect the smoothest watching experience ever
                             on RedFox as we have fast loading speed, seamless streaming feature, and
-                            especially, no ads.&nbsp;
+                            especially, no ads.
                             <br />
                             - Daily database updates: Our database is updated on a daily basis with the
                             latest releases, requested titles, and random hidden gems that not many know
                             about. Check out the site frequently in order not to miss out on any
-                            fun.&nbsp;
+                            fun.
                             <br />
                             - Friendly user interface: No matter how long you have been familiar with
                             movie sites, you will figure out how to navigate and browse through RedFox at
                             first glance. If you have a title in mind, head to the search bar. If not,
-                            simply use the site’s filter system and suggestions.&nbsp;
+                            simply use the site’s filter system and suggestions.
                             <br />
                             - Mobile-friendly and Chromecast supported: With these two features, you can
                             continue watching your movies or TV shows anytime, anywhere, with any device
@@ -253,15 +253,15 @@ function WebsiteInfo() {
                             - Zero ads: Ads are safe and enjoyable, says no movie fan ever! Ads can be
                             risky and annoying, therefore, you should stay away from them whenever the
                             opportunity is given. And they are nonexistent on RedFox, so why put your
-                            device at risk on other sites?&nbsp;
+                            device at risk on other sites?
                             <br />
                             - No account or registration needed: Your user experience on RedFox is
                             completely hassle-free. You can visit us whenever you are in the mood, search
                             for your movie of interest, enjoy it, and leave as you please. There is no
-                            registration or signup required at all.&nbsp;
+                            registration or signup required at all.
                             <br />- Best customer service: Our team is at your service 24/7 to assist you
                             with any problems while using the site. If you have any request or inquiry,
-                            feel free to send us a message.&nbsp;
+                            feel free to send us a message.
                         </em>
 
                     </span>
