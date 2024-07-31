@@ -244,7 +244,7 @@ function WebsiteInfo() {
                             - Friendly user interface: No matter how long you have been familiar with
                             movie sites, you will figure out how to navigate and browse through RedFox at
                             first glance. If you have a title in mind, head to the search bar. If not,
-                            simply use the site’s filter system and suggestions.
+                            simply use the sites filter system and suggestions.
                             <br />
                             - Mobile-friendly and Chromecast supported: With these two features, you can
                             continue watching your movies or TV shows anytime, anywhere, with any device
