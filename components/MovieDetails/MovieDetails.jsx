@@ -330,7 +330,7 @@ export default function MovieDetails({ id, movieInfo, availableServers }) {
                         <Typography container textAlign="center" fontWeight='lighter' color={'#555556'} spacing={2} marginBottom={2}>If current server doesn&apos;t work please try other servers below.</Typography>
                         {/* server info */}
                         <Grid container justifyContent="center" spacing={1}>
-                            {availableServers?.map((value) => (
+                            {availableServers?.length > 1 && availableServers?.map((value) => (
                                 <Grid key={value.name}
                                     sx={{
                                         "cursor": "pointer"
