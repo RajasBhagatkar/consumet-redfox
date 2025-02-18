@@ -89,7 +89,7 @@ export default function MovieDetails({ id, movieInfo, availableServers }) {
                 ...prev,
                 isPlaying: true,
                 episodeNumber: episodeInfo.number,
-                allServerLinks: response.data
+                allServerLinks: response?.data
             }))
 
             // alert(JSON.stringify(data))
